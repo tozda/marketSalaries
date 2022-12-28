@@ -5,6 +5,7 @@ from selenium.webdriver.chrome.options import Options
 import re
 from datetime import timedelta
 from datetime import date
+import logging
 
 # file encoding windows-1250
 
@@ -41,44 +42,10 @@ def remove_new_line(string):
     return string
 
 
-def get_next_wednesday(current_date):
-    """
-    On the basis of current date returns the date of next wednesday.
-    If weekday() function return 2 from current_date the return current date.
-    Else iterate through range from 0 - Monday to 6 - Sunday in search
-    for value of 2
-
-    :param current_date:
-    :return current_date: with value of next wednesday
-    """
-
-    current_date = date.today()
-    wednesday_id = 2
-    week_range = range(0, 7)
-
-    for day_id in week_range:
-        if current_date.weekday() == wednesday_id:
-            return current_date
-        else:
-            current_date += timedelta(days=1)
-
-
-def get_wednesdays(next_wednesday, no_of_wednesdays):
-    """
-    Using year input generate list of all Wednesday since current date
-    till end of the year
-    :param
-        next_wednesday: the nearest wednesday from now
-        no_of_wednesdays: how many wednesdays from now you want to get in return
-    :return wednesdays: list of defined number of wednesdays
-    """
-
-    wednesdays = []
-    for wed in range(0, int(no_of_wednesdays)):
-        wednesdays.append(next_wednesday)
-        next_wednesday += timedelta(days=7)
-
-    return wednesdays
+def get_logger(name):
+    logger = logging.getLogger(name)
+    logger.setLevel(logging.INFO)
+    return logger
 
 
 class Calendar:
